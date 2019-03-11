@@ -39,7 +39,31 @@ class Node {
     }
 
     boolean canCommunicateWith(Node n) {
-        double d = Math.sqrt(Math.pow(this.x + n.x, 2) + Math.pow(this.y + n.y ,2));
-        return d <= Network.R;
+        return this.distance(n) <= Network.R;
+    }
+
+    double distance(Node n) {
+        return this.distance(this.x, this.y, n.x, n.y);
+    }
+
+    // Following algorithm from: (https://blog.demofox.org/2017/10/01/calculating-the-distance-between-points-in-wrap-around-toroidal-space/)
+    double distance(double n1_x, double n1_y, double n2_x, double n2_y) {
+        double dx = Math.abs(n1_x  - n2_x);
+        double dy = Math.abs(n1_y  - n2_y);
+
+        if (dx > Network.MAX_X / 2) {
+            dx = Network.MAX_X - dx;
+        }
+
+        if (dy > Network.MAX_X / 2) {
+            dy = Network.MAX_X - dy;
+        }
+
+        return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy,2));
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.x + "," + this.y + ")";
     }
 }
