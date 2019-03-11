@@ -5,8 +5,10 @@ import java.util.ArrayList;
  */
 public class Main2 {
     public static void main(String[] args) {
+        ArrayList<Integer> s = new ArrayList<Integer>();
+
         // Run experiment 10 times.
-        for (int ex = 0; ex < 10; ex++) {
+        for (int ex = 0; ex < 100; ex++) {
             ArrayList<Integer> nodes_with_message = new ArrayList<Integer>();
             nodes_with_message.add(0);
             int destination_i = 1;
@@ -43,9 +45,21 @@ public class Main2 {
                 }
             }
 
-            System.out.println(success + " (s) required. Message shared with " + nodes_with_message.size() + " nodes");
+            System.out.println("Upper: " + TheoreticalCalculations.expectedMessageDeliveryTimeUpperBound());
+            System.out.println("Simul: " + success + " (s) required. Message shared with " + nodes_with_message.size() + " nodes");
+            System.out.println("Lower: " + TheoreticalCalculations.expectedMessageDeliveryTimeLowerBound());
+            System.out.println();
+
+            s.add(success);
         }
 
-        System.out.println();
+        double avg = 0;
+        for (Integer x : s) {
+            avg += x;
+        }
+
+        System.out.println("=========");
+        System.out.println("Average: " + avg / s.size());
+        System.out.println("=========");
     }
 }

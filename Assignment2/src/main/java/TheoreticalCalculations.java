@@ -20,7 +20,13 @@ class TheoreticalCalculations {
         return ET / (p_m * v_bar + 2 * (1 - p_m));
     }
 
-    static double expectedMessageDeliveryTime() {
-        return 0.0;
+    static double expectedMessageDeliveryTimeLowerBound() {
+        double M = Network.NUM_NODES;
+        double H_M = Math.log(M - 1);
+        return (H_M / (M - 1)) * expectedMeetingTime();
+    }
+
+    static double expectedMessageDeliveryTimeUpperBound() {
+        return expectedMeetingTime();
     }
 }
