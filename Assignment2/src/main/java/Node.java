@@ -3,6 +3,7 @@ class Node {
     private double x;
     private double y;
     private int endTime = 0;
+    private int pauseTime = 0;
     private double angle;
     private double speed;
 
@@ -18,15 +19,16 @@ class Node {
      */
     void RandomDirection(int t) {
         // IF is paused THEN nothing is required
-        if (t > endTime && t < endTime + Network.PAUSE_TIME) {
+        if (t > endTime && t < endTime + pauseTime) {
             return;
         }
 
         // IF needs new THEN randomly set Network
-        if (t >= endTime + Network.PAUSE_TIME) {
+        if (t >= endTime + pauseTime) {
             this.angle = Math.random() * 2 * Math.PI;
             this.speed = Math.random() * (Network.MAX_V + Network.MIN_V) + Network.MIN_V;
             this.endTime = t + (int) (Math.random() * (Network.MAX_TIME_SPAN - 1)) + 1;
+            this.pauseTime = (int) (Math.random() * Network.PAUSE_TIME);
         }
 
         // IF is moving THEN update location
